@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Shcherbakov_Material_Design</string>
+    <string name="app_name">Student List</string>
 
     <!-- Имена студентов -->
     <string name="student1">Иван Петров</string>

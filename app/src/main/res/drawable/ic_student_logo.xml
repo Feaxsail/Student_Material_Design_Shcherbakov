@@ -1,0 +1,17 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="64dp"
+    android:height="64dp"
+    android:viewportWidth="64"
+    android:viewportHeight="64">
+    <!-- Зелёный круг -->
+    <path
+        android:fillColor="#006C4C"
+        android:pathData="M32,32m-28,0a28,28 0,1 1,56 0a28,28 0,1 1,-56 0"/>
+    <!-- Белая буква S -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M32,20 L32,20 Q40,20 40,26 Q40,32 32,32 Q24,32 24,38 Q24,44 32,44 L32,44"
+        android:strokeWidth="4"
+        android:strokeColor="#FFFFFF"
+        android:fillAlpha="0"/>
+</vector>

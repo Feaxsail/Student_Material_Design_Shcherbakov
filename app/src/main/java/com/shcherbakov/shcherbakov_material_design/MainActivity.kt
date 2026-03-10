@@ -87,13 +87,43 @@ fun StudentItem(student: Student) {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun StudentTopAppBar(modifier: Modifier = Modifier) {
+    CenterAlignedTopAppBar(
+        title = {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_student_logo),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(dimensionResource(R.dimen.image_size))
+                        .padding(dimensionResource(R.dimen.padding_small))
+                )
+                Text(
+                    text = stringResource(R.string.app_name),
+                    style = MaterialTheme.typography.displayLarge
+                )
+            }
+        },
+        modifier = modifier
+    )
+}
+
 @Composable
 fun StudentApp() {
-    LazyColumn(
-        modifier = Modifier.padding(dimensionResource(R.dimen.padding_small))
-    ) {
-        items(students) { student ->
-            StudentItem(student)
+    Scaffold(
+        topBar = { StudentTopAppBar() }
+    ) { paddingValues ->
+        LazyColumn(
+            contentPadding = paddingValues,
+            modifier = Modifier.padding(dimensionResource(R.dimen.padding_small))
+        ) {
+            items(students) { student ->
+                StudentItem(student)
+            }
         }
     }
 }
