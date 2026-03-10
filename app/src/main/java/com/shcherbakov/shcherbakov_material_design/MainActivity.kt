@@ -10,8 +10,11 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ExpandLess
+import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -20,6 +23,9 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
 import com.shcherbakov.shcherbakov_material_design.data.Student
 import com.shcherbakov.shcherbakov_material_design.data.students
 import com.shcherbakov.shcherbakov_material_design.ui.theme.Shcherbakov_Material_DesignTheme
@@ -69,20 +75,72 @@ fun StudentInformation(@StringRes studentName: Int, studentAge: Int) {
 }
 
 @Composable
+fun StudentItemButton(expanded: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
+    IconButton(onClick = onClick, modifier = modifier) {
+        Icon(
+            imageVector = if (expanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
+            contentDescription = stringResource(R.string.expand_button_content_description),
+            tint = MaterialTheme.colorScheme.secondary
+        )
+    }
+}
+
+@Composable
+fun StudentDescription(@StringRes description: Int) {
+    Column(
+        modifier = Modifier.padding(
+            start = dimensionResource(R.dimen.padding_medium),
+            end = dimensionResource(R.dimen.padding_medium),
+            bottom = dimensionResource(R.dimen.padding_medium)
+        )
+    ) {
+        Text(
+            text = stringResource(R.string.about),
+            style = MaterialTheme.typography.labelSmall
+        )
+        Text(
+            text = stringResource(description),
+            style = MaterialTheme.typography.bodyLarge
+        )
+    }
+}
+
+@Composable
 fun StudentItem(student: Student) {
-    Card(
+    var expanded by remember { mutableStateOf(false) }
+
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(dimensionResource(R.dimen.padding_small))
+            .animateContentSize(
+                animationSpec = spring(
+                    dampingRatio = Spring.DampingRatioNoBouncy,
+                    stiffness = Spring.StiffnessMedium
+                )
+            )
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(dimensionResource(R.dimen.padding_medium)),
-            verticalAlignment = Alignment.CenterVertically
+        Card(
+            modifier = Modifier.fillMaxWidth()
         ) {
-            StudentIcon(student.imageResourceId)
-            StudentInformation(student.name, student.age)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(dimensionResource(R.dimen.padding_medium)),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                StudentIcon(student.imageResourceId)
+                StudentInformation(student.name, student.age)
+                Spacer(modifier = Modifier.weight(1f))
+                StudentItemButton(
+                    expanded = expanded,
+                    onClick = { expanded = !expanded }
+                )
+            }
+        }
+
+        if (expanded) {
+            StudentDescription(student.description)
         }
     }
 }
