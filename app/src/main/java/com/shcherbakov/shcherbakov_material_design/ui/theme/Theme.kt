@@ -105,6 +105,7 @@ fun Shcherbakov_Material_DesignTheme(
     MaterialTheme(
         colorScheme = colorScheme,
         typography = Typography,
+        shapes = Shapes,
         content = content
     )
 }
