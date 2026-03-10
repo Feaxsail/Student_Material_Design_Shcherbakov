@@ -65,19 +65,28 @@ fun StudentInformation(@StringRes studentName: Int, studentAge: Int) {
 
 @Composable
 fun StudentItem(student: Student) {
-    Row(
+    Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(dimensionResource(R.dimen.padding_medium))
+            .padding(dimensionResource(R.dimen.padding_small))
     ) {
-        StudentIcon(student.imageResourceId)
-        StudentInformation(student.name, student.age)
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(dimensionResource(R.dimen.padding_medium)),
+            verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
+        ) {
+            StudentIcon(student.imageResourceId)
+            StudentInformation(student.name, student.age)
+        }
     }
 }
 
 @Composable
 fun StudentApp() {
-    LazyColumn {
+    LazyColumn(
+        modifier = Modifier.padding(dimensionResource(R.dimen.padding_small))
+    ) {
         items(students) { student ->
             StudentItem(student)
         }
