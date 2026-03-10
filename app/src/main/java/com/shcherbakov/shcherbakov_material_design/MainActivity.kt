@@ -100,3 +100,12 @@ fun StudentPreview() {
         StudentApp()
     }
 }
+
+// НОВАЯ ФУНКЦИЯ ДЛЯ ТЁМНОЙ ТЕМЫ
+@Preview(showBackground = false)
+@Composable
+fun StudentDarkThemePreview() {
+    Shcherbakov_Material_DesignTheme(darkTheme = true) {
+        StudentApp()
+    }
+}
